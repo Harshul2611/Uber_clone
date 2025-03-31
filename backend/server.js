@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 dotenv.config();
 
 const userRouter = require("./routes/user.routes");
+const captainRouter = require("./routes/captain.routes");
 
 const connectToDb = require("./db/mongodb");
 connectToDb();
@@ -18,6 +19,7 @@ app.use(cookieParser());
 const port = process.env.PORT || 3000;
 
 app.use("/users", userRouter);
+app.use("/captains", captainRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

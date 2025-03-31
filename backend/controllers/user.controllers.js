@@ -12,6 +12,12 @@ const registerUser = async (req, res, next) => {
 
   const { fullname, email, password } = req.body;
 
+  const isUserAlreadyExist = await userModel.findOne({ email });
+
+  if (isUserAlreadyExist) {
+    return res.status(400).json({ message: "User already exsist" });
+  }
+
   const hashedPassword = await userModel.hashPassword(password);
 
   const user = await createUser({
@@ -58,11 +64,11 @@ const getUserProfile = async (req, res, next) => {
 };
 
 const logoutUser = async (req, res, next) => {
-  res.clearCookie("token");
-
   const token = req.cookies.token || res.headers.authorization.split(" ")[1];
 
   await blacklistTokenModel.create({ token });
+
+  res.clearCookie("token");
 
   res.status(200).json({ message: "Logged out successfully" });
 };

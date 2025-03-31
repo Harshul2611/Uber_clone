@@ -7,7 +7,7 @@ const {
   getUserProfile,
   logoutUser,
 } = require("../controllers/user.controllers");
-const authUser = require("../middlewares/auth.middleware");
+const { authUser } = require("../middlewares/auth.middleware");
 
 userRouter.post(
   "/api/register",
